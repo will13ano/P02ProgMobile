@@ -1,4 +1,4 @@
-package com.example.androidempresax.db;
+package com.example.p02progmobile.db;
 
 import java.io.Serializable;
 
@@ -6,8 +6,8 @@ public class Jogador implements Serializable {
 
     private int idJogador;
     private int idTime;
-    private string nome, cpf;
-    private int AnoNascimento;
+    private String nome, cpf;
+    private int anoNascimento;
 
     public int getIdJogador() {
         return idJogador;
@@ -17,16 +17,16 @@ public class Jogador implements Serializable {
         return idTime;
     }
 
-    public string getNome() {
+    public String getNome() {
         return nome;
     }
 
-    public string getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
     public int getAnoNascimento() {
-        return AnoNascimento;
+        return anoNascimento;
     }
 
     public void setIdJogador(int idJogador) {
@@ -37,26 +37,26 @@ public class Jogador implements Serializable {
         this.idTime = idTime;
     }
 
-    public void setNome(string nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public void setCpf(string cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
     public void setAnoNascimento(int anoNascimento) {
-        AnoNascimento = anoNascimento;
+        this.anoNascimento = anoNascimento;
     }
 
-    public Jogadores() {
+    public Jogador() {
     }
 
-    public Jogadores(int idJogador, int idTime, string nome, string cpf, int anoNascimento) {
+    public Jogador(int idJogador, int idTime, String nome, String cpf, int anoNascimento) {
         this.idJogador = idJogador;
         this.idTime = idTime;
         this.nome = nome;
         this.cpf = cpf;
-        AnoNascimento = anoNascimento;
+        this.anoNascimento = anoNascimento;
     }
 }

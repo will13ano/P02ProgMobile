@@ -1,11 +1,11 @@
-package com.example.androidempresax.db;
+package com.example.p02progmobile.db;
 
 import java.io.Serializable;
 
 public class Time implements Serializable {
 
     private int idTime;
-    private string descricao;
+    private String nome;
 
     public int getIdTime() {
         return idTime;
@@ -15,19 +15,19 @@ public class Time implements Serializable {
         this.idTime = idTime;
     }
 
-    public string getDescricao() {
-        return descricao;
+    public String getNome() {
+        return nome;
     }
 
-    public void setDescricao(string descricao) {
-        this.descricao = descricao;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public times() {
+    public Time() {
     }
 
-    public times(int idTime, string descricao) {
+    public Time(int idTime, String nome) {
         this.idTime = idTime;
-        this.descricao = descricao;
+        this.nome = nome;
     }
 }
