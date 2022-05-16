@@ -26,15 +26,15 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String COLUMN_BIRTH = "anoNascimento";
 
     private static final String CREATE_TABLE_TIME = "CREATE TABLE " + TIME_TABLE_NAME + "("
-            + COLUMN_ID_TIME + "INT PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_ID_TIME + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_NOME + " TEXT NOT NULL );";
 
     private static final String CREATE_TABLE_JOGADOR = "CREATE TABLE " + JOGADOR_TABLE_NAME + "("
-            + COLUMN_ID_JOGADOR + "INT NOT NULL PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_ID_JOGADOR + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_NOME + "TEXT NOT NULL,"
             + COLUMN_CPF + "TEXT NOT NULL,"
-            + COLUMN_BIRTH + "INT,"
-            + COLUMN_ID_TIME + "INT,"
+            + COLUMN_BIRTH + " INTEGER,"
+            + COLUMN_ID_TIME + " INTEGER,"
             + "FOREIGN KEY (" + COLUMN_ID_TIME + ") REFERENCES " + TIME_TABLE_NAME
             + "("+ COLUMN_ID_TIME +") );";
 

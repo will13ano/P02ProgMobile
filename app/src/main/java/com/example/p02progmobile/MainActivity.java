@@ -1,11 +1,11 @@
 package com.example.p02progmobile;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import androidx.viewpager.widget.ViewPager;
+
 import com.example.p02progmobile.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent it = new Intent(MainActivity.this, CadastroActivity.class);
+                startActivity(it);
             }
         });
 
