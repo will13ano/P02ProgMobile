@@ -21,7 +21,7 @@ import com.example.p02progmobile.db.Time;
 
 public class CadastroTimeFragment extends Fragment {
     private FragmentCadastroTimeBinding binding;
-    private DBHelper dbHelper = new DBHelper(getActivity());
+    private DBHelper dbHelper;
 
     public CadastroTimeFragment() {
         // Required empty public constructor
@@ -36,7 +36,7 @@ public class CadastroTimeFragment extends Fragment {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-
+        dbHelper = new DBHelper(getActivity());
         binding = FragmentCadastroTimeBinding.inflate(inflater, container, false);
 
         return binding.getRoot();
@@ -55,13 +55,17 @@ public class CadastroTimeFragment extends Fragment {
                 Time time = new Time();
                 time.setNome(nome);
 
-                dbHelper.inserirTime(time);
-                Toast toast = Toast.makeText(getActivity(), R.string.created_time, Toast.LENGTH_SHORT);
-                toast.show();
+                long id = dbHelper.inserirTime(time);
 
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                getActivity().finish();
-                startActivity(intent);
+                Toast toast;
+
+                if ( id > 0 ) {
+                    toast = Toast.makeText(getActivity(), R.string.created_time, Toast.LENGTH_SHORT);
+                } else {
+                    toast = Toast.makeText(getActivity(), R.string.uncreated_time, Toast.LENGTH_SHORT);
+                }
+
+                toast.show();
             }
         });
         super.onViewCreated(view, savedInstanceState);

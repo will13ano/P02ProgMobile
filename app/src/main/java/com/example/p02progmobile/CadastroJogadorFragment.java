@@ -1,6 +1,5 @@
 package com.example.p02progmobile;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,9 +23,9 @@ import java.util.ArrayList;
 
 public class CadastroJogadorFragment extends Fragment {
     private FragmentCadastroJogadorBinding binding;
-    private Jogador novoJogador;
-    private ArrayList<Time> arrayListTimes;
-    private String selectedTime;
+    private Time selectedTime;
+    private Jogador jogador;
+    private DBHelper dbHelper;
 
     public CadastroJogadorFragment() {
         // Required empty public constructor
@@ -50,17 +49,11 @@ public class CadastroJogadorFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Intent it = getActivity().getIntent();
-
-        Jogador jogador = (Jogador) it.getSerializableExtra("jogador");
-        novoJogador = new Jogador();
-
         ListView listTimes = binding.listJogadoresCadastro;
         registerForContextMenu(listTimes);
 
-        DBHelper dbHelper = new DBHelper(getActivity());
-        arrayListTimes = dbHelper.selectAllTimes();
-        dbHelper.close();
+        dbHelper = new DBHelper(getActivity());
+        ArrayList<Time> arrayListTimes = dbHelper.selectAllTimes();
 
         if (listTimes != null) {
             listTimes.setAdapter(
@@ -69,7 +62,7 @@ public class CadastroJogadorFragment extends Fragment {
         }
 
         listTimes.setOnItemClickListener((adapterView, view1, i, l) -> {
-            selectedTime = listTimes.getItemAtPosition(i).toString();
+            selectedTime = (Time) listTimes.getItemAtPosition(i);
         });
 
         binding.saveJogador.setOnClickListener(view1 -> {
@@ -82,9 +75,53 @@ public class CadastroJogadorFragment extends Fragment {
                 toast.show();
             }
             else {
+                Jogador jogador1 = new Jogador();
+                jogador1.setNome(nome);
+                jogador1.setAnoNascimento(Integer.parseInt(anoNascimento));
+                jogador1.setCpf(cpf);
+                jogador1.setIdTime(selectedTime.getIdTime());
 
+                long id = dbHelper.inserirJogador(jogador1);
+                Toast toast;
+
+                if ( id != -1.0 ) {
+                    toast = Toast.makeText(getActivity(), R.string.created_jogador, Toast.LENGTH_SHORT);
+                } else {
+                    toast = Toast.makeText(getActivity(), R.string.uncreated_jogador, Toast.LENGTH_SHORT);
+                }
+
+                toast.show();
             }
         });
+        Bundle bundle = getActivity().getIntent().getExtras();
+
+        if (bundle.getBoolean("edit")) {
+            jogador = (Jogador) bundle.get("jogador");
+
+            binding.jogadorName.setText(jogador.getNome());
+            binding.jogadorCpf.setText(jogador.getCpf());
+            binding.jogadorBirthYear.setText(String.valueOf(jogador.getAnoNascimento()));
+            selectedTime = dbHelper.getTime(jogador.getIdTime());
+
+            binding.saveJogador.setOnClickListener(view1 -> {
+                jogador.setNome(binding.jogadorName.getText().toString());
+                jogador.setCpf(binding.jogadorCpf.getText().toString());
+                jogador.setAnoNascimento(Integer.parseInt(binding.jogadorBirthYear.getText().toString()));
+                jogador.setIdTime(selectedTime.getIdTime());
+
+                Toast toast;
+
+                if ( dbHelper.updateJogador(jogador) ) {
+                    toast = Toast.makeText(getActivity(), R.string.updated_jogador, Toast.LENGTH_SHORT);
+                } else {
+                    toast = Toast.makeText(getActivity(), R.string.unupdated_jogador, Toast.LENGTH_SHORT);
+                }
+
+                toast.show();
+            });
+
+        }
+
     }
 
 }

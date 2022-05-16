@@ -30,15 +30,15 @@ public class DBHelper extends SQLiteOpenHelper {
             + COLUMN_NOME + " TEXT NOT NULL );";
 
     private static final String CREATE_TABLE_JOGADOR = "CREATE TABLE " + JOGADOR_TABLE_NAME + "("
-            + COLUMN_ID_JOGADOR + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
-            + COLUMN_NOME + "TEXT NOT NULL,"
-            + COLUMN_CPF + "TEXT NOT NULL,"
-            + COLUMN_BIRTH + " INTEGER,"
-            + COLUMN_ID_TIME + " INTEGER,"
+            + COLUMN_ID_JOGADOR + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COLUMN_NOME + " TEXT NOT NULL, "
+            + COLUMN_CPF + " TEXT NOT NULL, "
+            + COLUMN_BIRTH + " INTEGER, "
+            + COLUMN_ID_TIME + " INTEGER, "
             + "FOREIGN KEY (" + COLUMN_ID_TIME + ") REFERENCES " + TIME_TABLE_NAME
-            + "("+ COLUMN_ID_TIME +") );";
+            + " ("+ COLUMN_ID_TIME +") );";
 
-    SQLiteDatabase sqLiteDatabase;
+    private SQLiteDatabase sqLiteDatabase;
 
     public DBHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -53,18 +53,18 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
     }
 
-    public void inserirTime(Time time) {
-        sqLiteDatabase = this.getWritableDatabase();
+    public long inserirTime(Time time) {
+        SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(COLUMN_ID_TIME, time.getIdTime());
         values.put(COLUMN_NOME, time.getNome());
 
-        sqLiteDatabase.insert(TIME_TABLE_NAME, null, values);
-        sqLiteDatabase.close();
+        long id = db.insert(TIME_TABLE_NAME, null, values);
+        db.close();
+
+        return id;
     }
 
     public void updateTime(Time time) {
@@ -75,6 +75,18 @@ public class DBHelper extends SQLiteOpenHelper {
 
         sqLiteDatabase.update(TIME_TABLE_NAME, values, "idTime=?", new String[]{String.valueOf(time.getIdTime())});
         sqLiteDatabase.close();
+    }
+
+    public Time getTime(int id) {
+        sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = sqLiteDatabase.query(TIME_TABLE_NAME,
+                new String[]{"*"},
+                "idTime=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
+
+        cursor.moveToFirst();
+        return new Time(cursor.getInt(0), cursor.getString(1));
     }
 
     public ArrayList<Time> selectAllTimes() {
@@ -91,39 +103,51 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public long deleteTime(Time time) {
         sqLiteDatabase = this.getWritableDatabase();
-        return sqLiteDatabase.delete(TIME_TABLE_NAME,
+
+        long id =  sqLiteDatabase.delete(TIME_TABLE_NAME,
                 COLUMN_ID_TIME + "=?", new String[]{String.valueOf(time.getIdTime())});
+        sqLiteDatabase.close();
+
+        return id;
     }
 
-    public void inserirJogador(Jogador jogador) {
+    public long inserirJogador(Jogador jogador) {
         sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
-        values.put(COLUMN_ID_JOGADOR, jogador.getIdJogador());
+        values.put(COLUMN_NOME, jogador.getNome());
+        values.put(COLUMN_CPF, jogador.getCpf());
+        values.put(COLUMN_BIRTH, jogador.getAnoNascimento());
+        values.put(COLUMN_ID_TIME, jogador.getIdTime());
+
+        long id = sqLiteDatabase.insert(JOGADOR_TABLE_NAME, null, values);
+        sqLiteDatabase.close();
+
+        return id;
+    }
+
+    public boolean updateJogador(Jogador jogador) {
+        sqLiteDatabase = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
         values.put(COLUMN_ID_TIME, jogador.getIdTime());
         values.put(COLUMN_NOME, jogador.getNome());
         values.put(COLUMN_CPF, jogador.getCpf());
         values.put(COLUMN_BIRTH, jogador.getAnoNascimento());
 
-        sqLiteDatabase.insert(JOGADOR_TABLE_NAME, null, values);
-        sqLiteDatabase.close();
-    }
+        try {
+            sqLiteDatabase.update(JOGADOR_TABLE_NAME, values,
+                    COLUMN_ID_JOGADOR+"=?",
+                    new String[]{String.valueOf(jogador.getIdJogador())});
+            sqLiteDatabase.close();
+        }
+        catch (Exception e) {
+            return false;
+        }
 
-    public void updateJogador(Jogador jogador) {
-        sqLiteDatabase = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-
-        values.put(COLUMN_ID_TIME, jogador.getIdTime());
-        values.put(COLUMN_NOME, jogador.getNome());
-        values.put(COLUMN_CPF, jogador.getCpf());
-        values.put(COLUMN_BIRTH, jogador.getAnoNascimento());
-
-        sqLiteDatabase.update(JOGADOR_TABLE_NAME, values,
-                COLUMN_ID_JOGADOR+"=?",
-                new String[]{String.valueOf(jogador.getIdJogador())});
-        sqLiteDatabase.close();
+        return true;
     }
 
     public ArrayList<Jogador> selectAllJogadores() {
@@ -139,10 +163,10 @@ public class DBHelper extends SQLiteOpenHelper {
             jogadoresList.add(
                     new Jogador(
                             cursor.getInt(0),
-                            cursor.getInt(1),
+                            cursor.getInt(4),
+                            cursor.getString(1),
                             cursor.getString(2),
-                            cursor.getString(3),
-                            cursor.getInt(4)
+                            cursor.getInt(3)
                     )
             );
         }

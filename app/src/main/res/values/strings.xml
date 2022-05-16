@@ -7,13 +7,12 @@
     <string name="next">Proximo</string>
     <string name="previous">Anterior</string>
 
-    <string name="hello_second_fragment">Hello second fragment</string>
-
     <string name="players">Jogadores</string>
     <string name="teams">Times</string>
     <string name="add_players">Cadastrar Jogadores</string>
     <string name="add_teams">Cadastrar Times</string>
     <string name="jogador_text_view">Jogadores Cadastrados</string>
+    <string name="times_text_view">Times Cadastrados</string>
     <string name="name">Nome</string>
     <string name="document">CPF</string>
     <string name="birth_year">Ano de Nascimento</string>
@@ -21,4 +20,9 @@
     <string name="select_time">Selecionar Time</string>
     <string name="empty_fields">Campos obigatórios em branco</string>
     <string name="created_time">Time criado com sucesso</string>
+    <string name="uncreated_time">Não foi possivel criar este time</string>
+    <string name="created_jogador">Jogador criado com sucesso</string>
+    <string name="uncreated_jogador">Não foi possivel criar este jogador</string>
+    <string name="updated_jogador">Jogador alterado com sucesso</string>
+    <string name="unupdated_jogador">Não foi possivel alterar este jogador</string>
 </resources>

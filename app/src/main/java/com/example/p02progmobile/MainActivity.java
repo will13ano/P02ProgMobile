@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent it = new Intent(MainActivity.this, CadastroActivity.class);
+                it.putExtra("edit", false);
                 startActivity(it);
             }
         });

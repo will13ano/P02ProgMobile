@@ -58,6 +58,7 @@ public class FirstFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Jogador jogador = (Jogador) jogadorArrayAdapter.getItem(i);
                 Intent it = new Intent(getActivity(), CadastroActivity.class);
+                it.putExtra("edit", true);
                 it.putExtra("jogador", jogador);
                 startActivity(it);
             }

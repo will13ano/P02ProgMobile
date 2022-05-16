@@ -29,10 +29,6 @@ public class Jogador implements Serializable {
         return anoNascimento;
     }
 
-    public void setIdJogador(int idJogador) {
-        this.idJogador = idJogador;
-    }
-
     public void setIdTime(int idTime) {
         this.idTime = idTime;
     }
@@ -60,7 +56,8 @@ public class Jogador implements Serializable {
         this.anoNascimento = anoNascimento;
     }
 
+    @Override
     public String toString() {
-        return "Nome: " + this.nome + "CPF: " + this.cpf + "Data de Nascimento: " + this.anoNascimento;
+        return "Nome: " + this.nome +" ID: " +this.idJogador  +" CPF: " + this.cpf + " Data de Nascimento: " + this.anoNascimento + " Time: " + this.idTime;
     }
 }

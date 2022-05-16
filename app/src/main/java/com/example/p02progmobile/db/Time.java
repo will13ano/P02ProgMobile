@@ -11,10 +11,6 @@ public class Time implements Serializable {
         return idTime;
     }
 
-    public void setIdTime(int idTime) {
-        this.idTime = idTime;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -32,6 +28,6 @@ public class Time implements Serializable {
     }
 
     public String toString() {
-        return "Time: " + this.nome;
+        return "Time: " + this.nome + " ID: " + this.getIdTime();
     }
 }
