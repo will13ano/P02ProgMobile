@@ -30,4 +30,8 @@ public class Time implements Serializable {
         this.idTime = idTime;
         this.nome = nome;
     }
+
+    public String toString() {
+        return "Time: " + this.nome;
+    }
 }

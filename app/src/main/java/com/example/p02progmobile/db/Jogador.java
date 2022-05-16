@@ -59,4 +59,8 @@ public class Jogador implements Serializable {
         this.cpf = cpf;
         this.anoNascimento = anoNascimento;
     }
+
+    public String toString() {
+        return "Nome: " + this.nome + "CPF: " + this.cpf + "Data de Nascimento: " + this.anoNascimento;
+    }
 }
