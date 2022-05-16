@@ -94,4 +94,67 @@ public class DBHelper extends SQLiteOpenHelper {
         return sqLiteDatabase.delete(TIME_TABLE_NAME,
                 COLUMN_ID_TIME + "=?", new String[]{String.valueOf(time.getIdTime())});
     }
+
+    public void inserirJogador(Jogador jogador) {
+        sqLiteDatabase = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_ID_JOGADOR, jogador.getIdJogador());
+        values.put(COLUMN_ID_TIME, jogador.getIdTime());
+        values.put(COLUMN_NOME, jogador.getNome());
+        values.put(COLUMN_CPF, jogador.getCpf());
+        values.put(COLUMN_BIRTH, jogador.getAnoNascimento());
+
+        sqLiteDatabase.insert(JOGADOR_TABLE_NAME, null, values);
+        sqLiteDatabase.close();
+    }
+
+    public void updateJogador(Jogador jogador) {
+        sqLiteDatabase = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_ID_TIME, jogador.getIdTime());
+        values.put(COLUMN_NOME, jogador.getNome());
+        values.put(COLUMN_CPF, jogador.getCpf());
+        values.put(COLUMN_BIRTH, jogador.getAnoNascimento());
+
+        sqLiteDatabase.update(JOGADOR_TABLE_NAME, values,
+                COLUMN_ID_JOGADOR+"=?",
+                new String[]{String.valueOf(jogador.getIdJogador())});
+        sqLiteDatabase.close();
+    }
+
+    public ArrayList<Jogador> selectAllJogadores() {
+        sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = sqLiteDatabase.query(JOGADOR_TABLE_NAME,
+                new String[]{"*"},
+                null, null, null, null, null, null);
+
+        ArrayList<Jogador> jogadoresList = new ArrayList<Jogador>();
+
+        while (cursor.moveToNext()) {
+            jogadoresList.add(
+                    new Jogador(
+                            cursor.getInt(0),
+                            cursor.getInt(1),
+                            cursor.getString(2),
+                            cursor.getString(3),
+                            cursor.getInt(4)
+                    )
+            );
+        }
+
+        return jogadoresList;
+    }
+
+    public long deleteJogador(Jogador jogador) {
+        sqLiteDatabase = this.getWritableDatabase();
+
+        return sqLiteDatabase.delete(JOGADOR_TABLE_NAME,
+                COLUMN_ID_JOGADOR+"=?",
+                new String[]{String.valueOf(jogador.getIdJogador())});
+    }
 }

@@ -41,9 +41,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        SectionsPagerAdapter pagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager pager = binding.viewPager;
-        pager.setAdapter(pagerAdapter);
+        pager.setAdapter( new SectionsPagerAdapter(this, getSupportFragmentManager()) );
 
         binding.tabs.setupWithViewPager(pager);
     }
