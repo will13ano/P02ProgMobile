@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 public class FirstFragment extends Fragment {
     private FragmentFirstBinding binding;
-
     private static String selectedJogador;
     private ArrayList<Jogador> arrayJogadores;
     private ArrayAdapter<Jogador> jogadorArrayAdapter;

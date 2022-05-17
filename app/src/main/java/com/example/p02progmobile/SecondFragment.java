@@ -1,5 +1,6 @@
 package com.example.p02progmobile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +49,14 @@ public class SecondFragment extends Fragment {
             timeArrayAdapter = new ArrayAdapter<Time>(getActivity(), android.R.layout.simple_list_item_1, timesArray);
             listTimes.setAdapter(timeArrayAdapter);
         }
+
+        listTimes.setOnItemClickListener((adapterView, view1, i, l) -> {
+            Time time = (Time) timeArrayAdapter.getItem(i);
+            Intent it = new Intent(getActivity(), CadastroActivity.class);
+            it.putExtra("edit", true);
+            it.putExtra("time", time);
+            startActivity(it);
+        });
     }
 
     @Override

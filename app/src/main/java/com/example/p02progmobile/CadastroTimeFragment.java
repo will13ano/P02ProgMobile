@@ -61,6 +61,7 @@ public class CadastroTimeFragment extends Fragment {
 
                 if ( id > 0 ) {
                     toast = Toast.makeText(getActivity(), R.string.created_time, Toast.LENGTH_SHORT);
+                    reload();
                 } else {
                     toast = Toast.makeText(getActivity(), R.string.uncreated_time, Toast.LENGTH_SHORT);
                 }
@@ -68,6 +69,35 @@ public class CadastroTimeFragment extends Fragment {
                 toast.show();
             }
         });
+
+        Bundle bundle = getActivity().getIntent().getExtras();
+
+        if (bundle.getBoolean("edit")) {
+            Time time = (Time) bundle.get("time");
+            if (time != null) {
+                binding.nomeJogadorEditText.setText(time.getNome());
+
+                binding.save.setOnClickListener(view1 -> {
+                    time.setNome(binding.nomeJogadorEditText.getText().toString());
+                    Toast toast;
+
+                    if ( dbHelper.updateTime(time)  ) {
+                        toast = Toast.makeText(getActivity(), R.string.updated_time, Toast.LENGTH_SHORT);
+                        reload();
+                    } else {
+                        toast = Toast.makeText(getActivity(), R.string.unupdated_time, Toast.LENGTH_SHORT);
+                    }
+
+                    toast.show();
+                });
+            }
+        }
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    public void reload() {
+        Intent it = new Intent(getActivity(), MainActivity.class);
+        getActivity().finish();
+        getActivity().startActivity(it);
     }
 }

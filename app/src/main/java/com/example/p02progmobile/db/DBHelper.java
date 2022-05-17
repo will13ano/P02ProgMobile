@@ -67,14 +67,20 @@ public class DBHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public void updateTime(Time time) {
+    public boolean updateTime(Time time) {
         sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_NOME, time.getNome());
 
-        sqLiteDatabase.update(TIME_TABLE_NAME, values, "idTime=?", new String[]{String.valueOf(time.getIdTime())});
-        sqLiteDatabase.close();
+        try {
+            sqLiteDatabase.update(TIME_TABLE_NAME, values, "idTime=?", new String[]{String.valueOf(time.getIdTime())});
+            sqLiteDatabase.close();
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
     }
 
     public Time getTime(int id) {

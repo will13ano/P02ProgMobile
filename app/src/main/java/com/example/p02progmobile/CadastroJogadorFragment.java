@@ -1,5 +1,6 @@
 package com.example.p02progmobile;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -86,6 +87,7 @@ public class CadastroJogadorFragment extends Fragment {
 
                 if ( id != -1.0 ) {
                     toast = Toast.makeText(getActivity(), R.string.created_jogador, Toast.LENGTH_SHORT);
+                    reload();
                 } else {
                     toast = Toast.makeText(getActivity(), R.string.uncreated_jogador, Toast.LENGTH_SHORT);
                 }
@@ -97,31 +99,39 @@ public class CadastroJogadorFragment extends Fragment {
 
         if (bundle.getBoolean("edit")) {
             jogador = (Jogador) bundle.get("jogador");
+            if (jogador != null ) {
+                binding.jogadorName.setText(jogador.getNome());
+                binding.jogadorCpf.setText(jogador.getCpf());
+                binding.jogadorBirthYear.setText(String.valueOf(jogador.getAnoNascimento()));
+                selectedTime = dbHelper.getTime(jogador.getIdTime());
 
-            binding.jogadorName.setText(jogador.getNome());
-            binding.jogadorCpf.setText(jogador.getCpf());
-            binding.jogadorBirthYear.setText(String.valueOf(jogador.getAnoNascimento()));
-            selectedTime = dbHelper.getTime(jogador.getIdTime());
+                binding.saveJogador.setOnClickListener(view1 -> {
+                    jogador.setNome(binding.jogadorName.getText().toString());
+                    jogador.setCpf(binding.jogadorCpf.getText().toString());
+                    jogador.setAnoNascimento(Integer.parseInt(binding.jogadorBirthYear.getText().toString()));
+                    jogador.setIdTime(selectedTime.getIdTime());
 
-            binding.saveJogador.setOnClickListener(view1 -> {
-                jogador.setNome(binding.jogadorName.getText().toString());
-                jogador.setCpf(binding.jogadorCpf.getText().toString());
-                jogador.setAnoNascimento(Integer.parseInt(binding.jogadorBirthYear.getText().toString()));
-                jogador.setIdTime(selectedTime.getIdTime());
+                    Toast toast;
 
-                Toast toast;
+                    if ( dbHelper.updateJogador(jogador) ) {
+                        toast = Toast.makeText(getActivity(), R.string.updated_jogador, Toast.LENGTH_SHORT);
+                        reload();
+                    } else {
+                        toast = Toast.makeText(getActivity(), R.string.unupdated_jogador, Toast.LENGTH_SHORT);
+                    }
 
-                if ( dbHelper.updateJogador(jogador) ) {
-                    toast = Toast.makeText(getActivity(), R.string.updated_jogador, Toast.LENGTH_SHORT);
-                } else {
-                    toast = Toast.makeText(getActivity(), R.string.unupdated_jogador, Toast.LENGTH_SHORT);
-                }
+                    toast.show();
+                });
 
-                toast.show();
-            });
-
+            }
         }
 
+    }
+
+    public void reload() {
+        Intent it = new Intent(getActivity(), MainActivity.class);
+        getActivity().finish();
+        getActivity().startActivity(it);
     }
 
 }
