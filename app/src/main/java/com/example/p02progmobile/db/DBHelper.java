@@ -166,13 +166,19 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<Jogador> jogadoresList = new ArrayList<Jogador>();
 
         while (cursor.moveToNext()) {
+            int idTimeIndex = cursor.getColumnIndex("idTime");
+            int idJogadorIndex = cursor.getColumnIndex("idJogador");
+            int anoNascimentoIndex = cursor.getColumnIndex("anoNascimento");
+            int cpfIndex = cursor.getColumnIndex("cpf");
+            int nomeIndex = cursor.getColumnIndex("nome");
+
             jogadoresList.add(
                     new Jogador(
-                            cursor.getInt(0),
-                            cursor.getInt(4),
-                            cursor.getString(1),
-                            cursor.getString(2),
-                            cursor.getInt(3)
+                            cursor.getInt(idTimeIndex),
+                            cursor.getInt(idJogadorIndex),
+                            cursor.getString(nomeIndex),
+                            cursor.getString(cpfIndex),
+                            cursor.getInt(anoNascimentoIndex)
                     )
             );
         }

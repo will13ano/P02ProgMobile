@@ -2,14 +2,19 @@ package com.example.p02progmobile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 
@@ -74,9 +79,40 @@ public class FirstFragment extends Fragment {
     }
 
     @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        MenuItem deleteTeam = menu.add(Menu.NONE, 1, 1, R.string.delete);
+
+        deleteTeam.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                DBHelper dbHelper = new DBHelper(getActivity());
+                long id = dbHelper.deleteJogador(jogador);
+                Toast toast = null;
+                
+                if (id == -1.0) {
+                    toast = toast.makeText(getActivity(), R.string.jogador_delete_error, Toast.LENGTH_SHORT);
+                }
+                else {
+                    toast = toast.makeText(getActivity(), R.string.jogador_delete_success, Toast.LENGTH_SHORT);
+                }
+
+                toast.show();
+                reload();
+                return false;
+            }
+        });
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
 
+    public void reload() {
+        Intent it = new Intent(getActivity(), MainActivity.class);
+        getActivity().finish();
+        getActivity().startActivity(it);
+    }
 }

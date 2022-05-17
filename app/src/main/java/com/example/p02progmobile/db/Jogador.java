@@ -58,6 +58,6 @@ public class Jogador implements Serializable {
 
     @Override
     public String toString() {
-        return "Nome: " + this.nome +" ID: " +this.idJogador  +" CPF: " + this.cpf + " Data de Nascimento: " + this.anoNascimento + " Time: " + this.idTime;
+        return "Nome: " + this.nome +" CPF: " + this.cpf + " ID: " +this.idJogador +" \nData de Nascimento: " + this.anoNascimento + " Time: " + this.idTime;
     }
 }
