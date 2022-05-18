@@ -163,27 +163,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 new String[]{"*"},
                 null, null, null, null, null, null);
 
-        ArrayList<Jogador> jogadoresList = new ArrayList<Jogador>();
-
-        while (cursor.moveToNext()) {
-            int idTimeIndex = cursor.getColumnIndex("idTime");
-            int idJogadorIndex = cursor.getColumnIndex("idJogador");
-            int anoNascimentoIndex = cursor.getColumnIndex("anoNascimento");
-            int cpfIndex = cursor.getColumnIndex("cpf");
-            int nomeIndex = cursor.getColumnIndex("nome");
-
-            jogadoresList.add(
-                    new Jogador(
-                            cursor.getInt(idTimeIndex),
-                            cursor.getInt(idJogadorIndex),
-                            cursor.getString(nomeIndex),
-                            cursor.getString(cpfIndex),
-                            cursor.getInt(anoNascimentoIndex)
-                    )
-            );
-        }
-
-        return jogadoresList;
+        return this.converteCursorEmListaDeJogadores(cursor);
     }
 
     public long deleteJogador(Jogador jogador) {
@@ -192,5 +172,44 @@ public class DBHelper extends SQLiteOpenHelper {
         return sqLiteDatabase.delete(JOGADOR_TABLE_NAME,
                 COLUMN_ID_JOGADOR+"=?",
                 new String[]{String.valueOf(jogador.getIdJogador())});
+    }
+
+    public ArrayList<Jogador> selectJogadoresPorTime(Time time) {
+        sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = sqLiteDatabase.query(JOGADOR_TABLE_NAME,
+                new String[]{"*"},
+                "idTime=?", new String[]{String.valueOf(time.getIdTime())},
+                null, null, null, null);
+
+        return this.converteCursorEmListaDeJogadores(cursor);
+    };
+
+    private ArrayList<Jogador> converteCursorEmListaDeJogadores(Cursor cursor) {
+        ArrayList<Jogador> jogadoresList = new ArrayList<Jogador>();
+
+        while (cursor.moveToNext()) {
+            jogadoresList.add(
+                    this.converteCursorEmJogador(cursor)
+            );
+        }
+
+        return jogadoresList;
+    }
+
+    private Jogador converteCursorEmJogador(Cursor cursor) {
+        int idTimeIndex = cursor.getColumnIndex("idTime");
+        int idJogadorIndex = cursor.getColumnIndex("idJogador");
+        int anoNascimentoIndex = cursor.getColumnIndex("anoNascimento");
+        int cpfIndex = cursor.getColumnIndex("cpf");
+        int nomeIndex = cursor.getColumnIndex("nome");
+
+        return new Jogador(
+                cursor.getInt(idTimeIndex),
+                cursor.getInt(idJogadorIndex),
+                cursor.getString(nomeIndex),
+                cursor.getString(cpfIndex),
+                cursor.getInt(anoNascimentoIndex)
+        );
     }
 }

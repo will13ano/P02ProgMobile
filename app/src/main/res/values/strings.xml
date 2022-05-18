@@ -9,6 +9,7 @@
 
     <string name="players">Jogadores</string>
     <string name="teams">Times</string>
+    <string name="close">Fechar</string>
     <string name="add_players">Cadastrar Jogadores</string>
     <string name="add_teams">Cadastrar Times</string>
     <string name="jogador_text_view">Jogadores Cadastrados</string>
