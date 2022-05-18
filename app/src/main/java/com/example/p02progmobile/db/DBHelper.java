@@ -90,9 +90,14 @@ public class DBHelper extends SQLiteOpenHelper {
                 new String[]{"*"},
                 "idTime=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
-
-        cursor.moveToFirst();
-        return new Time(cursor.getInt(0), cursor.getString(1));
+        try {
+            cursor.moveToFirst();
+            Time time = new Time(cursor.getInt(0), cursor.getString(1));
+            return time;
+        }
+        catch (Exception e) {
+            return null;
+        }
     }
 
     public ArrayList<Time> selectAllTimes() {
@@ -205,8 +210,8 @@ public class DBHelper extends SQLiteOpenHelper {
         int nomeIndex = cursor.getColumnIndex("nome");
 
         return new Jogador(
-                cursor.getInt(idTimeIndex),
                 cursor.getInt(idJogadorIndex),
+                cursor.getInt(idTimeIndex),
                 cursor.getString(nomeIndex),
                 cursor.getString(cpfIndex),
                 cursor.getInt(anoNascimentoIndex)

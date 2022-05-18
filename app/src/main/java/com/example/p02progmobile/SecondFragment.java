@@ -1,7 +1,7 @@
 package com.example.p02progmobile;
 
+
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +20,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.p02progmobile.databinding.FragmentSecondBinding;
-import com.example.p02progmobile.databinding.JogadoresDialogBinding;
 import com.example.p02progmobile.db.DBHelper;
 import com.example.p02progmobile.db.Jogador;
 import com.example.p02progmobile.db.Time;
@@ -28,7 +27,6 @@ import com.example.p02progmobile.db.Time;
 import java.util.ArrayList;
 
 public class SecondFragment extends Fragment {
-    private JogadoresDialogBinding dialogBinding;
     private FragmentSecondBinding binding;
     private ArrayAdapter<Time> timeArrayAdapter;
     private Time time;
@@ -38,7 +36,6 @@ public class SecondFragment extends Fragment {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        dialogBinding = JogadoresDialogBinding.inflate(inflater, container, false);
         binding = FragmentSecondBinding.inflate(inflater, container, false);
         return binding.getRoot();
 
@@ -80,7 +77,7 @@ public class SecondFragment extends Fragment {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 DBHelper dbHelper = new DBHelper(getActivity());
                 long id = dbHelper.deleteTime(time);
-                Toast toast = null;
+                Toast toast = new Toast(getActivity());
 
                 if (id == -1.0) {
                     toast.makeText(getActivity(), R.string.jogador_delete_error, Toast.LENGTH_SHORT);

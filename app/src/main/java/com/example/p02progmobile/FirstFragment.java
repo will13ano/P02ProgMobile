@@ -1,5 +1,6 @@
 package com.example.p02progmobile;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -16,7 +17,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 
 import com.example.p02progmobile.databinding.FragmentFirstBinding;
 import com.example.p02progmobile.db.DBHelper;
@@ -80,20 +80,24 @@ public class FirstFragment extends Fragment {
 
     @Override
     public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
-        MenuItem deleteTeam = menu.add(Menu.NONE, 1, 1, R.string.delete);
+        MenuItem deleteTeam = menu.add(Menu.NONE,
+                1,
+                1,
+                R.string.delete);
 
-        deleteTeam.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        ((MenuItem) deleteTeam).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 DBHelper dbHelper = new DBHelper(getActivity());
                 long id = dbHelper.deleteJogador(jogador);
-                Toast toast = null;
+
+                Toast toast = new Toast(getActivity());
                 
                 if (id == -1.0) {
-                    toast = toast.makeText(getActivity(), R.string.jogador_delete_error, Toast.LENGTH_SHORT);
+                    toast.makeText(getActivity(), R.string.jogador_delete_error, Toast.LENGTH_SHORT);
                 }
                 else {
-                    toast = toast.makeText(getActivity(), R.string.jogador_delete_success, Toast.LENGTH_SHORT);
+                    toast.makeText(getActivity(), R.string.jogador_delete_success, Toast.LENGTH_SHORT);
                 }
 
                 toast.show();

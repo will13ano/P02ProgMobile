@@ -1,5 +1,6 @@
 package com.example.p02progmobile;
 
+
 import android.content.Context;
 
 import androidx.annotation.NonNull;
@@ -7,7 +8,6 @@ import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @StringRes
