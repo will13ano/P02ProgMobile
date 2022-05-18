@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Times e Jogadores</string>
+    <string name="action_settings">Configurações</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Proximo</string>
+    <string name="previous">Anterior</string>
+
+    <string name="players">Jogadores</string>
+    <string name="teams">Times</string>
+    <string name="close">Fechar</string>
+    <string name="add_players">Cadastrar Jogadores</string>
+    <string name="add_teams">Cadastrar Times</string>
+    <string name="jogador_text_view">Jogadores Cadastrados</string>
+    <string name="times_text_view">Times Cadastrados</string>
+    <string name="name">Nome</string>
+    <string name="document">CPF</string>
+    <string name="birth_year">Ano de Nascimento</string>
+    <string name="save">Salvar</string>
+    <string name="select_time">Selecionar Time</string>
+    <string name="empty_fields">Campos obigatórios em branco</string>
+    <string name="created_time">Time criado com sucesso</string>
+    <string name="delete">Deletar</string>
+    <string name="uncreated_time">Não foi possivel criar este time</string>
+    <string name="updated_time">Time alterado com sucesso</string>
+    <string name="unupdated_time">Não foi possivel alterar este time</string>
+    <string name="created_jogador">Jogador criado com sucesso</string>
+    <string name="uncreated_jogador">Não foi possivel criar este jogador</string>
+    <string name="updated_jogador">Jogador alterado com sucesso</string>
+    <string name="unupdated_jogador">Não foi possivel alterar este jogador</string>
+    <string name="time_delete_error">Não foi possivel deletar o time</string>
+    <string name="time_delete_success">Time deletado com sucesso</string>
+    <string name="jogador_delete_error">Não foi possivel deletar o jogador</string>
+    <string name="jogador_delete_success">Jogador deletado com sucesso</string>
+    <string name="show_players">Mostrar Jogadores</string>
+</resources>
